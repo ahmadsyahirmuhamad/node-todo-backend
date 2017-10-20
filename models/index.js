@@ -7,6 +7,9 @@ const config = {
   password: 'postgres',
   options: {
     dialect: 'postgres',
+    define: {
+      underscored: true, // set default snakecase
+    },
   },
 };
 
