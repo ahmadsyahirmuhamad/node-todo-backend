@@ -1,49 +1,32 @@
-
 import express from 'express';
-import bodyParse from 'body-parser';
-import path from 'path';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { makeExecutableSchema } from 'graphql-tools';
-import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
-
+import graphqlHTTP from 'express-graphql';
+import Schema from './schema/schema';
 import models from './models';
-
-
-const types = fileLoader(path.join(__dirname, './schema'));
-const typeDefs = mergeTypes(types);
-
-
-const resolverFiles = fileLoader(path.join(__dirname, './resolvers'));
-const resolvers = mergeResolvers(resolverFiles);
-
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
 
 // initialize express
 const app = express();
 
-// initialize graphql endpoint
-app.use(
-  '/graphql',
-  bodyParse.json(),
-  graphqlExpress({
-    schema,
-    context: { models },
-  }),
-);
+// middleware
+function checkAuthorizationHeaders(req, res, next) {
+  if (req.headers.Authorization) {
+    console.log('Authorization Token:', req.headers.Authorization);
+  }
+  next();
+}
+app.use(checkAuthorizationHeaders);
 
-// initialize graphiql endpoint
-app.use(
-  '/graphiql',
-  graphiqlExpress({ endpointURL: '/graphql' }),
-);
+// initialize graphql endpoint
+app.use('/graphql', graphqlHTTP({
+  schema: Schema,
+  context: { models },
+  graphiql: true,
+  pretty: true,
+}));
 
 // init db
 // run server
 models.sequelize.sync()
   .then(() => {
-    app.listen(8081);
+    // console.log('Running a GraphQL API server at localhost:8080/graphql');
+    app.listen(8080);
   });
