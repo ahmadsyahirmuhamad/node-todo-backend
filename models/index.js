@@ -25,6 +25,7 @@ const sequelize = new Sequelize(
 const models = {
   User: sequelize.import('./users'),
   Todo: sequelize.import('./todos'),
+  SubTodo: sequelize.import('./sub_todos'),
 };
 
 // set associations between models

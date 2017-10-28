@@ -19,7 +19,7 @@ export default (sequelize, DataTypes) => {
     },
   });
 
-    // set models associations
+  // set models associations
   User.associate = (models) => {
     User.hasMany(models.Todo, {
       foreignKey: 'user_id',
