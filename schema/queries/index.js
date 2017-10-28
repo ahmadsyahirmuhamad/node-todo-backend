@@ -2,7 +2,7 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 
-import { getUser, allUsers } from './user';
+import { getUser } from './user';
 import { getTodo, allTodos } from './todo';
 
 const Query = new GraphQLObjectType({
@@ -11,7 +11,6 @@ const Query = new GraphQLObjectType({
   fields: () => ({
     // user
     getUser: getUser(),
-    allUsers: allUsers(),
 
     // todo
     getTodo: getTodo(),

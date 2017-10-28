@@ -21,16 +21,5 @@ function getUser() {
   };
 }
 
-function allUsers() {
-  return {
-    type: new GraphQLList(UserType),
-    description: 'get all user',
-    resolve(root, args, { models }) {
-      return models.User.findAll({ where: args });
-    },
-  };
-}
-
-
-export { getUser, allUsers };
+export { getUser };
 

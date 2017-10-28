@@ -52,8 +52,3 @@ const UserType = new GraphQLObjectType({
 });
 
 export default UserType;
-
-
-// check on GraphQLNonNull on types
-// seems not working
-// can only be used on mutations

@@ -10,6 +10,7 @@ export default (sequelize, DataTypes) => {
     },
     completed: {
       type: DataTypes.BOOLEAN,
+      // should have default val
     },
   });
 

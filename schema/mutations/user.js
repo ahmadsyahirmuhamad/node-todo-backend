@@ -1,5 +1,6 @@
 import {
   GraphQLNonNull,
+  GraphQLInt,
   GraphQLString,
 } from 'graphql';
 
@@ -29,28 +30,35 @@ function adduser() {
   };
 }
 
-function deleteUser() {
+function updateUser() {
   return {
     type: UserType,
     args: {
-      email: {
-        type: new GraphQLNonNull(GraphQLString),
+      id: {
+        type: new GraphQLNonNull(GraphQLInt),
       },
-      password: {
-        type: new GraphQLNonNull(GraphQLString),
+      email: {
+        type: GraphQLString,
       },
       first_name: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: GraphQLString,
       },
       last_name: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: GraphQLString,
       },
     },
     resolve(source, args, { models }) {
-      const user = models.User.create(args);
-      return user;
+      return models.User.findById(args.id)
+        .then((user) => {
+          return user.update(args).then((self) => {
+            return self;
+          });
+        }).catch(e => {
+          console.log(e);
+        });
     },
   };
 }
 
-export { adduser, deleteUser };
+export { adduser, updateUser };
+
