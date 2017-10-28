@@ -2,8 +2,7 @@ export default (sequelize, DataTypes) => {
   // set models attributes
   const Todo = sequelize.define('todo', {
     title: {
-      type: DataTypes.STRING,
-      unique: true,
+      type: DataTypes.STRING, 
     },
     description: {
       type: DataTypes.STRING,

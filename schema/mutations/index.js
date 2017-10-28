@@ -4,6 +4,7 @@ import {
 
 import { adduser, updateUser } from './user';
 import { addTodo, updateTodo } from './todo';
+import { addSubTodo, updateSubTodo } from './sub_todo';
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutations',
@@ -17,6 +18,9 @@ const Mutation = new GraphQLObjectType({
       // Todo
       addTodo: addTodo(),
       updateTodo: updateTodo(),
+      // SubTodo
+      addSubTodo: addSubTodo(),
+      updateSubTodo: updateSubTodo(),
     };
   },
 });
