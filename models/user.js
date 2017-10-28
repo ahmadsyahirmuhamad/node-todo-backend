@@ -1,6 +1,6 @@
-export default (sequelize, DataTypes) => {
-  // set model attributes
-  const User = sequelize.define('user', {
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var User = sequelize.define('User', {
     email: {
       type: DataTypes.STRING,
       unique: true,
@@ -18,12 +18,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
   });
-
-  // set models associations
-  User.associate = (models) => {
+  User.associate = function(models) {
     User.hasMany(models.Todo, {
       foreignKey: 'user_id',
     });
-  };
+  }
   return User;
 };

@@ -1,6 +1,6 @@
-export default (sequelize, DataTypes) => {
-  // set models attributes
-  const Todo = sequelize.define('todo', {
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var Todo = sequelize.define('Todo', {
     title: {
       type: DataTypes.STRING, 
     },
@@ -9,15 +9,16 @@ export default (sequelize, DataTypes) => {
     },
     completed: {
       type: DataTypes.BOOLEAN,
-      // should have default val
+      defaultValue: false
     },
   });
-
-    // set models associations
-  Todo.associate = (models) => {
+  Todo.associate = function(models) {
+    Todo.hasMany(models.SubTodo, {
+      foreignKey: 'todo_id',
+    });
     Todo.belongsTo(models.User, {
       foreignKey: 'user_id',
     });
-  };
+  }
   return Todo;
 };
